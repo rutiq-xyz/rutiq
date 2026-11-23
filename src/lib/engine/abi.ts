@@ -1,4 +1,4 @@
-// ABI shapes of RutiqDecisionLog / RutiqRuleMath shared by the site, the parity fixture generator and the deploy page.
+// ABI shapes of RutiqDecisionLog / RutiqRuleMath shared by the site, the parity fixture generator and the tests.
 import { encodeAbiParameters, keccak256, toHex } from "viem";
 import type { Condition, RuleParams } from "./rules";
 

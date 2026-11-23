@@ -16,7 +16,7 @@ export function GET() {
     `Price data and round checks: ${BRAND.url}/data`,
     `Round history (JSON): ${BRAND.url}/api/history?market=ETH`,
     `Markets: ${MARKETS.map((m) => `${m.id} (feed ${m.feed})`).join(", ")}`,
-    `RutiqDecisionLog: ${logLive() ? CONTRACTS.decisionLog : "not deployed yet"}`,
+    `RutiqDecisionLog: ${logLive() ? CONTRACTS.decisionLog : "not configured"}`,
     `How it works: ${BRAND.url}/docs`,
     "",
   ];

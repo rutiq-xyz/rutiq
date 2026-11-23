@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { MAX_CALL_DATA, MAX_FOREIGN_GAS, checkBatch, isPlainRead, readTargets, runRelay } from "./relay";
-// Before deployment the relay knows the markets' feeds and tokens only; tests pass their own known target too.
+// The relay knows the markets' feeds and tokens and the decision log; tests pass their own known target too.
 const USDG = { address: "0x5fc5360d0400a0fd4f2af552add042d716f1d168" };
 const KNOWN = new Set([...readTargets(), USDG.address]);
 

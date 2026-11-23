@@ -10,7 +10,7 @@ This repository is the working code behind https://rutiq.xyz.
 
 - **Paper only.** Backtests and paper agents use virtual cash. There are no deposits, no vaults, no orders and no trades. Trading with real funds is a later stage and is not built.
 - **Live data is real.** Prices are Chainlink rounds on Robinhood Chain (ETH/USD and five stock-token feeds). The round history ships as a snapshot and newer rounds are read live from the feeds; every close can be re-proven from the browser with `getRoundData`.
-- **The contract is written and tested, not deployed.** `RutiqDecisionLog` records paper decisions and refuses any decision the rule would not make at the referenced rounds. Until it is deployed, the log page shows the exact call data instead.
+- **The contract is live and verified.** `RutiqDecisionLog` is deployed on Robinhood Chain at `0x358b68b486b52a062da5a3deb8a568109a905307` and its source is verified on Blockscout. It records paper decisions and refuses any decision the rule would not make at the referenced rounds. It holds no funds.
 - **Planned, not built:** real-fund execution, $RUTIQ as compute credits for longer tests and more paper agents, more condition types.
 - **What nothing here claims:** that a rule is profitable, that a backtest predicts anything, that stock tokens are shares, or that $RUTIQ has any value. Simulated results never guarantee profit and are not advice. Rutiq is not affiliated with Robinhood.
 
@@ -18,7 +18,7 @@ This repository is the working code behind https://rutiq.xyz.
 
 | Path | What it is |
 |---|---|
-| `src/app/` | Pages (home, studio, paper, log, data, docs, token, local-only deploy) and API routes (`/api/history`, `/api/latest`, `/api/chain`, `/api/rpc`). |
+| `src/app/` | Pages (home, studio, paper, log, data, docs, token) and API routes (`/api/history`, `/api/latest`, `/api/chain`, `/api/rpc`). |
 | `src/components/` | Interface components: rule editor, backtest views, paper agents, decision log, wallet dialog. |
 | `src/config/` | `brand.ts` (name, ticker, token address, links), `contracts.ts` (deployed contract address), `markets.generated.ts` (proven markets). |
 | `src/lib/engine/` | The rule engine: bar closes from rounds, conditions, decisions, paper accounting, backtests, explanations. Same integer math as the contract. |
@@ -49,7 +49,7 @@ forge test --match-contract Fork --fork-url https://rpc.mainnet.chain.robinhood.
 
 ### What was checked for this snapshot
 
-2026-11-23 (UTC), Node.js 25.8, forge 1.5.1: typecheck exit 0, lint clean, `npm test` 35 pass / 0 fail (engine tests include a backtest over the real ETH/USD round history and a check that the site's ABI matches the compiled contract), `next build` 17 routes, `forge test` 23 passed (16 unit, 4 parity replays of 991 bars where the site and the contract must agree on every action, reason, cash and units value, 2 invariants with a handler sanity test), 2 fork tests against Robinhood Chain with the real ETH/USD and NVDA/USD feeds. Browser end-to-end run on a local fork of Robinhood Chain with the contract deployed there: 7 of 7 passed (wallet dialog, studio backtest with an on-chain round proof, refusal of an invalid rule, paper agent, register and commit against the contract, price data proof, 390 px layout), and `verify-deployment` printed MATCH for that deployment and MISMATCH for a wrong address. Not run here: a deployment on Robinhood Chain mainnet (the contract is not deployed yet).
+2026-11-23 (UTC), Node.js 25.8, forge 1.5.1: typecheck exit 0, lint clean, `npm test` 35 pass / 0 fail (engine tests include a backtest over the real ETH/USD round history and a check that the site's ABI matches the compiled contract), `next build` 17 routes, `forge test` 23 passed (16 unit, 4 parity replays of 991 bars where the site and the contract must agree on every action, reason, cash and units value, 2 invariants with a handler sanity test), 2 fork tests against Robinhood Chain with the real ETH/USD and NVDA/USD feeds. Browser end-to-end run on a local fork of Robinhood Chain with the contract deployed there: 7 of 7 passed (wallet dialog, studio backtest with an on-chain round proof, refusal of an invalid rule, paper agent, register and commit against the contract, price data proof, 390 px layout), and `verify-deployment` printed MATCH for that deployment and MISMATCH for a wrong address. Mainnet, 2026-11-23: `RutiqDecisionLog` deployed at `0x358b68b486b52a062da5a3deb8a568109a905307` (block 121,273,701); `verify-deployment` printed MATCH (chain id 4663, runtime code and creation input identical to this build), the creation receipt names the same address, and the source is verified on Blockscout. Not run against mainnet: commits from a real wallet (they were exercised on the fork).
 
 ## Look at the site
 
@@ -65,14 +65,14 @@ Open http://localhost:6640. The studio, paper trading and price data work with n
 
 | Contract | Address | Explorer |
 |---|---|---|
-| `RutiqDecisionLog` (with the internal library `RutiqRuleMath`) | not deployed yet | — |
+| `RutiqDecisionLog` (with the internal library `RutiqRuleMath`) | `0x358b68b486b52a062da5a3deb8a568109a905307` | [Blockscout](https://robinhoodchain.blockscout.com/address/0x358b68b486b52a062da5a3deb8a568109a905307?tab=contract) |
 
 A wallet registers a rule (feed, bar length, entry and exit condition, size, fee, stop-loss, take-profit, daily entry limit, UTC schedule, stale-price limit, starting paper cash). For each bar it may commit the decision with the Chainlink round ids of the closes the rule needs. The contract proves each close (published before the bar end, the next round after it), recomputes the rule and accepts only the decision it really makes, then updates the paper account. Bars before registration cannot be committed and skipped bars are counted. It has no owner, no admin, no fee, no upgrade and holds no funds.
 
 ## Verify a deployment
 
 ```
-npm run verify-deployment -- --log <address> --log-tx <creation transaction>
+npm run verify-deployment -- --log 0x358b68b486b52a062da5a3deb8a568109a905307 --log-tx 0x73142f00ccbaec8aba6c860df41010cf1a9cf685c03f3542234b7824f7dac8e9
 ```
 
 The script compares the bytecode on Robinhood Chain with the build in this repository and prints MATCH or the first difference.
@@ -114,8 +114,8 @@ $RUTIQ is the community token of Rutiq on Robinhood Chain. Contract address: ann
 | `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Shared rate-limit store | https URL, token string |
 | `STORE_KEY_PREFIX` | Key prefix in that store | short string ending in `:` |
 
-3. After the deploy: `/` answers 200, `/api/latest` lists six markets with prices, `/api/history?market=ETH` returns `"complete": true`, `/deploy` answers 404 on the public host.
-4. Contract: no constructor arguments. Deploy `RutiqDecisionLog` (from `/deploy` on localhost or with `forge create`), put the address, block and transaction into `src/config/contracts.ts`, then run `npm run verify-deployment`.
+3. After the deploy: `/` answers 200, `/api/latest` lists six markets with prices, `/api/history?market=ETH` returns `"complete": true`, `/log` shows the contract as live on chain.
+4. Contract: no constructor arguments. To deploy your own `RutiqDecisionLog`, use `forge create`, put the address, block and transaction into `src/config/contracts.ts`, then run `npm run verify-deployment`.
 5. Refresh the data when you like: `RPC_URL=<rpc> npm run markets` and `RPC_URL=<rpc> npm run rounds`.
 
 ## Contributing

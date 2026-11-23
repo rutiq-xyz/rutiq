@@ -31,9 +31,8 @@ type RuleSetRead = readonly [
 ];
 
 /*
- * The on-chain decision log. Before the owner deploys RutiqDecisionLog this page shows exactly what a commit would send (the rule's
- * parameters and hash, the next bar's round ids, action and reason) so it can be checked by hand; after deployment it registers a paper
- * agent's rule and commits its decisions bar by bar. The contract re-reads the rounds and refuses any decision the rule would not make.
+ * The on-chain decision log. It registers a paper agent's rule on RutiqDecisionLog and commits its decisions bar by bar, showing the
+ * exact call (the rule's parameters and hash, the next bar's round ids, action and reason) before it is sent. The contract re-reads the rounds and refuses any decision the rule would not make.
  */
 export function LogView() {
   const live = logLive();
@@ -58,7 +57,7 @@ export function LogView() {
           <div className="flex items-center gap-2">
             <StatusBadge status="Prototype" />
             <span className={`badge ${live ? "badge-live" : "badge-concept"}`} data-testid="log-status">
-              {live ? "Deployed" : "Not deployed yet"}
+              {live ? "Live on chain" : "Not configured"}
             </span>
           </div>
         </div>
@@ -89,7 +88,7 @@ export function LogView() {
                 ) : null}
               </p>
             ) : (
-              <p className="note">The contract is written and tested (unit, parity with this site&apos;s engine on 991 bars, invariants, Robinhood Chain fork) but not deployed yet. Until it is, this page shows the exact call a commit would make.</p>
+              <p className="note">The contract is written and tested (unit, parity with this site&apos;s engine on 991 bars, invariants, Robinhood Chain fork) but no address is configured in this build. This page shows the exact call a commit would make.</p>
             )}
           </div>
         </div>

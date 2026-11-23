@@ -212,7 +212,7 @@ const FEATS = [
   ["Proven price history", `Six markets, each a Chainlink feed on ${CHAIN.name}: ETH and five stock tokens checked on chain. Thousands of rounds, each one re-readable with its round number.`],
   ["Backtests with costs", "Fee and slippage on every fill, maximum drawdown, the trades, and buy-and-hold side by side, over 7, 30, 90 days or the whole history."],
   ["Paper trading", "Start an agent and it decides at every bar close on live rounds with virtual cash. The log is recomputed from chain data, so it can be replayed exactly."],
-  ["Decision log on chain", "Commit decisions to RutiqDecisionLog: the contract proves each close, recomputes the rule and refuses anything the rule would not do. Written and tested; deployment pending."],
+  ["Decision log on chain", "Commit decisions to RutiqDecisionLog: the contract proves each close, recomputes the rule and refuses anything the rule would not do. Live on Robinhood Chain and verified on the explorer."],
   ["Honest limits", "Paper only. No funds, no orders, no advice. Skipped bars are counted, stale prices are flagged, and real-fund execution stays a later stage."],
 ];
 
@@ -402,7 +402,7 @@ export function Closing() {
         </Reveal>
         <Reveal delay={120}>
           <p className="copy max-w-[460px]">
-            {BRAND.name} is a working prototype on {CHAIN.name}: the studio and paper trading run today on live chain data, and the log contract is written and tested, waiting to be deployed. Trading real funds and {BRAND.symbol} compute credits are planned.
+            {BRAND.name} is a working prototype on {CHAIN.name}: the studio and paper trading run today on live chain data, and the decision log contract is live on chain. Trading real funds and {BRAND.symbol} compute credits are planned.
             Simulated results never guarantee profit.
           </p>
           <div className="mt-4">
