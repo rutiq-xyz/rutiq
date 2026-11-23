@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BRAND, CHAIN, hasGithub } from "@/config/brand";
 import { CaBox } from "@/components/site/CaCopy";
-import { MarkGlyph } from "@/components/site/Mark";
+import { MarkTile } from "@/components/site/Mark";
 import { GithubIcon, XIcon } from "@/components/site/Icons";
 
 const COLS: { h: string; links: { href: string; label: string; ext?: boolean }[] }[] = [
@@ -100,10 +100,10 @@ export function SiteFooter() {
           © 2026 {BRAND.name} · {CHAIN.name} · chain {CHAIN.id} · not affiliated with Robinhood
         </p>
       </div>
-      <div className="relative" aria-hidden="true" data-reveal="">
+      <div className="relative mb-12 sm:mb-0" aria-hidden="true" data-reveal="">
         <p className="giant">rutiq</p>
         <div className="absolute left-1/2 top-[58%] -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_20px_40px_rgba(0,0,0,.6)]">
-          <MarkGlyph size={84} />
+          <MarkTile size={84} />
         </div>
       </div>
     </footer>

@@ -36,9 +36,9 @@ export function pageMeta({
   };
 }
 
-/** sha256 (first 8 hex) of src/app/opengraph-image.jpg; bump when the image changes (referensi/tools/make-assets.mjs prints it). */
-export const OG_VERSION = "7d3134a7";
-export const OG_ALT = `${BRAND.name} wordmark and an orange rule path on a dark field. ${BRAND.slogan}`;
+/** sha256 (first 8 hex) of src/app/opengraph-image.jpg; bump when the image changes (referensi/tools/apply-owner-assets.mjs prints it). */
+export const OG_VERSION = "fc370e5c";
+export const OG_ALT = `The ${BRAND.name} mark and name in white on a dark field with an orange glow. ${BRAND.slogan}`;
 
 export type Crumb = { name: string; path: string };
 

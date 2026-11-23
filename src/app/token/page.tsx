@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CaBox } from "@/components/site/CaCopy";
+import { MarkTile } from "@/components/site/Mark";
 import { PageHead, StatusBadge } from "@/components/site/PageHead";
 import { BRAND, CHAIN, TOKEN } from "@/config/brand";
 import { pageMeta } from "@/lib/seo";
@@ -22,7 +23,9 @@ export default function TokenPage() {
       <div className="wrap grid grid-cols-1 gap-6 py-10 lg:grid-cols-2">
         <section className="panel" data-testid="token-ca">
           <div className="panel-h">
-            <h2 className="h3 text-[20px]">Contract address</h2>
+            <h2 className="h3 flex items-center gap-3 text-[20px]">
+              <MarkTile size={32} /> Contract address
+            </h2>
           </div>
           <div className="panel-b">
             <p className="copy">
