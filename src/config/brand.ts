@@ -9,7 +9,7 @@ const CA: string = "TBA";
  * True once the domain points at this deployment. While false, the production *.vercel.app host is served as is (kept
  * out of search with noindex) instead of redirecting to a domain that does not serve the site.
  */
-export const DOMAIN_LIVE = false;
+export const DOMAIN_LIVE = true;
 
 export const isAddress = (v: string): v is `0x${string}` => /^0x[0-9a-fA-F]{40}$/.test(v);
 
