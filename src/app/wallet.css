@@ -1,0 +1,378 @@
+/* Wallet dialog, account menu, CA box and badges (structure shared with the other Robinhood Chain projects, colours from the tokens). */
+@layer components {
+  /* ---------- badges ---------- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .badge-proto {
+    background: rgba(255, 106, 19, 0.14);
+    color: #ffb183;
+  }
+  .badge-concept {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--muted);
+  }
+  .badge-sample {
+    background: var(--warn-bg);
+    color: var(--warn);
+  }
+  .badge-live {
+    background: var(--good-bg);
+    color: var(--good);
+  }
+  .badge-live::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 99px;
+    background: currentColor;
+  }
+  .c-lav .badge-sample,
+  .mx .badge-sample {
+    background: #fdf0d5;
+    color: #8a5300;
+  }
+
+  /* ---------- CA pill ---------- */
+  .ca {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    height: 34px;
+    border-radius: 4px;
+    border: 1px solid var(--line-2);
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 13px;
+    overflow: hidden;
+  }
+  .ca .k {
+    flex: none;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+    background: var(--cream);
+    color: var(--ground);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .ca .v {
+    min-width: 0;
+    padding: 0 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ca.full {
+    height: auto;
+    min-height: 40px;
+    align-items: stretch;
+  }
+  .ca.full .v {
+    flex: 1 1 auto;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    padding-block: 10px;
+    line-height: 1.4;
+  }
+  .ca .copy,
+  .ca .ext {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 10px;
+    border-left: 1px solid var(--line);
+    font-size: 12px;
+  }
+  .ca .copy:disabled {
+    color: var(--muted);
+  }
+  .bl-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+
+  /* ---------- reveal ---------- */
+  /* scroll reveal lives in the "motion" block at the end of this file */
+  @media (prefers-reduced-motion: reduce) {
+    .marquee,
+    .bq-ring-spin,
+    .bq-ring i,
+    .bq-caret,
+    .mx tr,
+    .bq-nav a {
+      animation: none !important;
+    }
+  }
+
+  /* ---------- footer ---------- */
+  .rq-navconnect {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 41px;
+    padding: 0 20px;
+    border-radius: 100px;
+    border: 1px solid var(--blue);
+    color: #fff;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: background-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .rq-navconnect:hover {
+    background: rgba(255, 106, 19, 0.14);
+    box-shadow: 0 0 24px rgba(255, 106, 19, 0.35);
+  }
+  .rq-navconnect .arr {
+    display: none;
+  }
+  .rq-navconnect .ico {
+    display: inline-flex;
+    order: -1;
+  }
+  @media (max-width: 520px) {
+    .rq-navconnect .txt {
+      display: none;
+    }
+    .rq-navconnect {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      justify-content: center;
+    }
+  }
+  .rq-acct {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    max-width: 190px;
+    padding: 0 10px;
+    border-radius: 100px;
+    border: 1px solid var(--blue);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    min-width: 0;
+  }
+  @media (max-width: 520px) {
+    .rq-acct {
+      height: 38px;
+      max-width: 140px;
+      padding: 0 8px;
+    }
+  }
+  .rq-acct .chev {
+    color: var(--muted);
+  }
+  .rq-avatar {
+    display: inline-grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 99px;
+    background: var(--blue);
+    flex: none;
+  }
+  .rq-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: #3fc779;
+    flex: none;
+  }
+  .rq-dot.bad {
+    background: #ff5b4a;
+  }
+  .rq-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.66);
+  }
+  .rq-modal-box {
+    width: min(440px, 100%);
+    max-height: calc(100dvh - 32px);
+    display: flex;
+    flex-direction: column;
+    background: #1a1616;
+    color: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    outline: none;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+  }
+  .rq-modal-head {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    padding: 20px 20px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .rq-modal-head h2 {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    line-height: 30px;
+    font-weight: 400;
+  }
+  .rq-modal-head p {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 19px;
+    color: var(--muted);
+  }
+  .rq-modal-body {
+    overflow-y: auto;
+    padding: 14px 20px 18px;
+    display: grid;
+    gap: 14px;
+  }
+  .rq-wgroup-label {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 6px;
+  }
+  .rq-wrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+    text-align: left;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .rq-wrow img,
+  .rq-wrow .ph {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    flex: none;
+  }
+  .rq-wrow small {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .rq-wrow:hover:not([aria-disabled="true"]):not(:disabled) {
+    border-color: var(--line-2);
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .rq-wrow[aria-disabled="true"],
+  .rq-wrow:disabled {
+    opacity: 0.5;
+  }
+  .rq-wrow .go {
+    font-size: 12px;
+    color: var(--cream-2);
+  }
+  .rq-modal-foot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .rq-iconbtn {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+  .rq-iconbtn:hover {
+    border-color: var(--cream);
+  }
+  .rq-alert {
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: var(--bad-bg);
+    color: var(--bad);
+    font-size: 13px;
+  }
+  .rq-menu {
+    position: fixed;
+    z-index: 70;
+    width: 290px;
+    padding: 16px;
+    background: #1a1616;
+    color: var(--cream);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    font-size: 13px;
+  }
+  .rq-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .rq-warn {
+    color: var(--warn);
+  }
+  .rq-menu .text-muted {
+    color: var(--muted);
+  }
+  .rq-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 4px;
+    border-top: 1px solid var(--line);
+    text-align: left;
+    font-size: 14px;
+  }
+  .rq-menu-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .rq-menu-item.bad {
+    color: var(--bad);
+  }
+  .rq-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 4px;
+    border: 1px solid var(--line-2);
+    font-size: 13px;
+  }
+}
+
+
