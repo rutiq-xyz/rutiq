@@ -223,7 +223,7 @@ export function Features() {
         <SplitHead title={<span id="feat-h">More than a backtest button</span>}>
           A backtest is the floor. A rule that keeps deciding on live prices, and explains every decision in plain words, is the point.
         </SplitHead>
-        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)]">
+        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,560px)_minmax(0,1fr)]">
           <ol>
             {FEATS.map(([t, d], i) => (
               <li key={t} className="feat" data-feat={i}>
