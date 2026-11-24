@@ -21,7 +21,7 @@ const SLUG = "rutiq";
 const TICKER = "RUTIQ";
 const DOMAIN = "rutiq.xyz";
 /** X account of the project (the owner's handle, as given). */
-const X_HANDLE = "rutiq";
+const X_HANDLE = "rutiqxyz";
 
 export const BRAND = {
   name: NAME,
@@ -41,7 +41,7 @@ export const BRAND = {
   x: `https://x.com/${X_HANDLE}`,
   xHandle: `@${X_HANDLE}`,
   // Public source repository: hidden until it exists.
-  github: "https://github.com/",
+  github: "https://github.com/rutiq-xyz/rutiq",
   ca: CA,
 } as const;
 
